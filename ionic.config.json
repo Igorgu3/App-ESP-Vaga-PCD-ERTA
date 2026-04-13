@@ -1,0 +1,7 @@
+{
+  "name": "app-vaga",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
