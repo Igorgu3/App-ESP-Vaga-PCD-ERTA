@@ -9,13 +9,13 @@
 }
 
 #container strong {
-  font-size: 20px;
-  line-height: 26px;
+  font-size: clamp(0.875rem, 2vmin, 1.25rem);
+  line-height: 1.6;
 }
 
 #container p {
-  font-size: 16px;
-  line-height: 22px;
+  font-size: clamp(0.8rem, 1.8vmin, 1rem);
+  line-height: 1.5;
 
   color: #8c8c8c;
 
