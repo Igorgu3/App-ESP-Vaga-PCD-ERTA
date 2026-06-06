@@ -32,15 +32,15 @@
         aria-label="Senha">
       </ion-input>
 
-      <ion-button class="btn-logar" expand="block" (click)="toLogin()">
+      <ion-button class="btn-logar" expand="block" aria-label="Entrar" (click)="toLogin()">
         Entrar
       </ion-button>
 
-      <ion-button class="btn-forgot" fill="clear" (click)="toForgotPassword()" slot="end">
+      <ion-button class="btn-forgot" fill="clear" aria-label="Esqueci minha senha" (click)="toForgotPassword()" slot="end">
         Esqueci minha senha
       </ion-button>
 
-      <ion-button class="btn-forgot" fill="clear" (click)="toRegister()" slot="end">
+      <ion-button class="btn-forgot" fill="clear" aria-label="Novo usuário? Cadastre-se aqui!" (click)="toRegister()" slot="end">
         Novo usuário? Cadastre-se aqui!
       </ion-button>
     </div>

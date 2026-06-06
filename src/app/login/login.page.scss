@@ -38,13 +38,13 @@ ion-content {
 // ── Botão Voltar ───────────────────────────────────────────────────────────
 .btn-back {
   position: absolute;
-  top: calc(var(--ion-safe-area-top, 0px) + 12px);
-  left: 4px;
+  top: calc(var(--ion-safe-area-top, 0px) + 15px);
+  left: 14px;
   --color: #ffffff;
   --background: transparent;
   --background-hover: transparent;
   --background-activated: rgba(255, 255, 255, 0.1);
-  --icon-font-size: 38px;
+  --icon-font-size: 60px;
   --min-height: 64px;
   --min-width: 64px;
   z-index: 10;
