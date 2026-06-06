@@ -14,15 +14,15 @@
 
     <!-- Subtítulo: desaparece na transição -->
     <div class="text-section" [class.text-out]="!isSplashVisible">
-      <p class="splash-subtitle">Tecnologia Assistiva para todos</p>
+      <p class="splash-subtitle">Garantindo seu direito!</p>
     </div>
 
     <!-- Botões: aparecem após a transição -->
     <div class="buttons-section" [class.buttons-in]="!isSplashVisible">
-      <ion-button class="btn-entrar" id="btn-entrar">
+      <ion-button class="btn-entrar" id="btn-entrar" aria-label="Entrar" (click)="toLogin()">
         Entrar
       </ion-button>
-      <ion-button class="btn-cadastrar" id="btn-cadastrar">
+      <ion-button class="btn-cadastrar" id="btn-cadastrar" aria-label="Sou PCD e Quero me Cadastrar"  (click)="toRegister()">
         Sou PCD e Quero me Cadastrar
       </ion-button>
     </div>
