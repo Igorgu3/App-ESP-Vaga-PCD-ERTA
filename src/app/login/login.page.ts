@@ -16,7 +16,9 @@ export class LoginPage implements OnInit {
 
   ngOnInit() { }
 
-  toLogin() { }
+  toLogin() {
+    this.navCtrl.navigateRoot('/home');
+  }
 
   toForgotPassword() {
     this.navCtrl.navigateForward('/forgot-password');

@@ -1,27 +1,240 @@
-#container {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+:host {
+  display: block;
+  height: 100%;
 }
 
-#container strong {
-  font-size: clamp(0.875rem, 2vmin, 1.25rem);
-  line-height: 1.6;
+ion-content {
+  --background: transparent;
 }
 
-#container p {
-  font-size: clamp(0.8rem, 1.8vmin, 1rem);
-  line-height: 1.5;
+// ── Fundo ──────────────────────────────────────────────────────────────────
+.home-background {
+  background: linear-gradient(160deg, #0f0f45 0%, #1a1a6e 50%, #0d0d3a 100%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vh 4vw 4vh;
+  gap: 2vh;
+  position: relative;
+  overflow: hidden;
 
-  color: #8c8c8c;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70vmin;
+    height: 70vmin;
+    background: radial-gradient(circle, rgba(100, 120, 255, 0.18) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+}
 
+// ── Barra superior (só o botão de menu) ────────────────────────────────────
+.home-topbar {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 0.9375rem;
+}
+
+.btn-menu {
+  --color: rgba(255, 255, 255, 0.75);
+  --background-activated: rgba(255, 255, 255, 0.1);
+
+  ion-icon {
+    font-size: clamp(1.8rem, 7vmin, 3rem);
+  }
+}
+
+// ── Logo (coluna, igual às outras páginas) ─────────────────────────────────
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5vmin;
+  animation: fadeIn 0.6s ease-out both;
+  margin-top: -6vh;
+}
+
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(4rem, 15vmin, 8rem);
+  height: clamp(4rem, 15vmin, 8rem);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 60px rgba(100, 120, 255, 0.35),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.logo-img {
+  width: clamp(2.5rem, 11vmin, 6rem);
+  height: clamp(2.5rem, 11vmin, 6rem);
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(180, 190, 255, 0.6));
+}
+
+.home-title {
+  color: #ffffff;
+  font-size: clamp(1rem, 5vmin, 2.5rem);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
   margin: 0;
+  text-shadow: 0 0 32px rgba(150, 165, 255, 0.7);
+  text-align: center;
 }
 
-#container a {
-  text-decoration: none;
+// ── Card do Mapa ───────────────────────────────────────────────────────────
+.fp-card {
+  width: 100%;
+  flex: 1;
+  max-height: 48vh;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(100, 120, 255, 0.35);
+  border-radius: 1.5rem;
+  padding: 1.5vh 3vw;
+  box-shadow:
+    0 0 40px rgba(100, 120, 255, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5vh;
+  animation: fadeInUp 0.7s ease-out 0.2s both;
+}
+
+.fp-title {
+  color: rgba(200, 210, 255, 0.9);
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.85rem, 3vmin, 1.5rem);
+  font-weight: 600;
+  margin: 0;
+  flex-shrink: 0;
+  text-shadow: 0 0 16px rgba(150, 165, 255, 0.5);
+}
+
+.mapa {
+  flex: 1;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 2px solid rgba(100, 120, 255, 0.45);
+  box-shadow:
+    0 0 30px rgba(100, 120, 255, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mapa-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+// ── Botão Principal ────────────────────────────────────────────────────────
+.btn-liberar {
+  --background: linear-gradient(135deg, #6c63ff 0%, #3b82f6 100%);
+  --background-hover: linear-gradient(135deg, #7c74ff 0%, #4b92ff 100%);
+  --background-activated: linear-gradient(135deg, #5c53ef 0%, #2b72e6 100%);
+  --color: #ffffff;
+  --border-radius: 1.25rem;
+  --box-shadow: 0 10px 40px rgba(108, 99, 255, 0.55);
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.8rem, 3.2vmin, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  width: 100%;
+  height: clamp(3.5rem, 11vmin, 5rem);
+  flex-shrink: 0;
+  animation: fadeInUp 0.7s ease-out 0.4s both;
+}
+
+// ── Popover de Menu ────────────────────────────────────────────────────────
+.menu-popover {
+  --background: #ffffff;
+  --width: 230px;
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  --border-radius: 0.75rem;
+}
+
+// ── Modal ──────────────────────────────────────────────────────────────────
+.modal-toolbar {
+  --background: #0f0f45;
+  --color: #ffffff;
+  --border-color: rgba(100, 120, 255, 0.3);
+}
+
+.modal-body {
+  --background: linear-gradient(160deg, #0f0f45 0%, #1a1a6e 50%, #0d0d3a 100%);
+}
+
+.modal-desc {
+  color: rgba(200, 210, 255, 0.85);
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.9rem, 3vmin, 1.4rem);
+  text-align: center;
+  margin: 2vh 0 3vh;
+  line-height: 1.5;
+}
+
+.btn-sim {
+  --background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  --background-hover: linear-gradient(135deg, #34d368 0%, #1db554 100%);
+  --background-activated: linear-gradient(135deg, #16a34a 0%, #0f8a3a 100%);
+  --color: #ffffff;
+  --border-radius: 1rem;
+  --box-shadow: 0 6px 24px rgba(34, 197, 94, 0.45);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 3.5vmin, 1.6rem);
+  height: clamp(3rem, 10vmin, 5rem);
+  margin-bottom: 1.5vh;
+}
+
+.btn-cancelar {
+  --color: rgba(200, 210, 255, 0.8);
+  --border-color: rgba(200, 210, 255, 0.4);
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.9rem, 3.5vmin, 1.6rem);
+  height: clamp(3rem, 10vmin, 5rem);
+}
+
+// ── Animações ──────────────────────────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 60px rgba(100, 120, 255, 0.35),
+      inset 0 0 30px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 100px rgba(100, 120, 255, 0.55),
+      inset 0 0 30px rgba(255, 255, 255, 0.08);
+  }
 }
