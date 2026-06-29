@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, NavController, IonInput, IonButton, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, NavController, IonInput, IonButton, IonBackButton, IonIcon } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonButton, IonBackButton, IonInput, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonIcon, IonButton, IonBackButton, IonInput, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
 export class RegisterPage implements OnInit {
+
+  public cpf: string = '';
 
   constructor(private navCtrl: NavController) { }
 
@@ -31,6 +33,10 @@ export class RegisterPage implements OnInit {
 
   onBackButton() {
     this.navCtrl.navigateBack('/splash');
+  }
+
+  onCpfChange(event: any) {
+    this.cpf = event.detail.value;
   }
 
 }

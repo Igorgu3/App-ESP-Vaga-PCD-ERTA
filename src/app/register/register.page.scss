@@ -152,6 +152,34 @@ ion-content {
   text-decoration: underline;
 }
 
+.cpf-feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0 0.25rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.8rem, 2.8vmin, 1.1rem);
+  font-weight: 600;
+  animation: fadeIn 0.25s ease-out both;
+  margin-top: -2vh;
+
+  ion-icon {
+    font-size: clamp(1.2rem, 3.5vmin, 1.8rem);
+    flex-shrink: 0;
+  }
+
+  &--invalid {
+    color: #ff5c5c;
+    ion-icon { color: #ff5c5c; }
+  }
+
+  &--valid {
+    color: #4cdb7a;
+    ion-icon { color: #4cdb7a; }
+  }
+}
+
 // ── Animações ──────────────────────────────────────────────────────────────
 @keyframes fadeIn {
   from { opacity: 0; }

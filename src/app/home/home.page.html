@@ -14,17 +14,23 @@
       <div class="logo-wrapper">
         <img src="assets/images/simbolo_TA.svg" alt="Logo Vaga TA" class="logo-img">
       </div>
-      <h1 class="home-title">Free Access</h1>
+      <h1 class="home-title">Sinal Verde</h1>
     </div>
 
     <div class="fp-card">
       <h2 class="fp-title">Vagas Próximas de Você:</h2>
-      <div class="mapa">
-        <img src="assets/images/mapa_mockup.png" alt="Mapa Vaga TA" class="mapa-img">
-      </div>
+      <div id="map"></div>
     </div>
 
-    <ion-button class="btn-liberar" expand="block" (click)="onLiberarVaga()">
+    @if (vagaSelecionada) {
+      <p class="vaga-selecionada-label">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        {{ vagaSelecionada }}
+      </p>
+    }
+
+    <ion-button [ngClass]="vagaSelecionada ? 'btn-liberar' : 'btn-liberar-disabled'"
+                expand="block" (click)="onLiberarVaga()" [disabled]="!vagaSelecionada">
       <ion-icon name="radio-outline" slot="start"></ion-icon>
       EMITIR SINAL — LIBERAR VAGA
       <ion-icon name="lock-open-outline" slot="end"></ion-icon>
@@ -52,7 +58,7 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding modal-body">
-          <p class="modal-desc">Ao confirmar, o sinal será emitido para liberar a vaga selecionada.</p>
+          <p class="modal-desc">Ao confirmar, o sinal será emitido para liberar a vaga <strong>{{ vagaSelecionada }}</strong>.</p>
           <ion-button expand="block" class="btn-sim" (click)="setOpen(false)">
             <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
             Sim, liberar!

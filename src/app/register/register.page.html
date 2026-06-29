@@ -10,7 +10,7 @@
       <div class="logo-wrapper">
         <img src="assets/images/simbolo_TA.svg" alt="Logo Vaga TA" class="logo-img">
       </div>
-      <h1 class="login-title">Free Access</h1>
+      <h1 class="login-title">Sinal Verde</h1>
     </div>
 
     <div class="form-section">
@@ -30,8 +30,20 @@
         fill="outline"
         label="CPF"
         labelPlacement="floating"
-        aria-label="CPF">
+        aria-label="CPF" [(ngModel)]="cpf" (ionChange)="onCpfChange($event)">
       </ion-input>
+
+      @if (cpf === '10093769695') {
+        <div class="cpf-feedback cpf-feedback--invalid">
+          <ion-icon name="close-circle-outline"></ion-icon>
+          <span>CPF inválido — não consta como PCD cadastrado</span>
+        </div>
+      } @else if (cpf.length > 1) {
+        <div class="cpf-feedback cpf-feedback--valid">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <span>CPF válido</span>
+        </div>
+      }
 
       <ion-input
         class="login-input"
@@ -40,6 +52,15 @@
         label="Número da Credencial"
         labelPlacement="floating"
         aria-label="Número da Credencial">
+      </ion-input>
+
+      <ion-input
+        class="login-input"
+        type="text"
+        fill="outline"
+        label="Placa do Veículo"
+        labelPlacement="floating"
+        aria-label="Placa do Veículo">
       </ion-input>
 
       <ion-input

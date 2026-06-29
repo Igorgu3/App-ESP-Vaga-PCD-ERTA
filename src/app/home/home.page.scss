@@ -141,6 +141,37 @@ ion-content {
   display: block;
 }
 
+#map {
+  flex: 1;
+  min-height: 0; // permite que o flex-child encolha corretamente
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 2px solid rgba(100, 120, 255, 0.45);
+  box-shadow:
+    0 0 30px rgba(100, 120, 255, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+// ── Label vaga selecionada ─────────────────────────────────────────────────
+.vaga-selecionada-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7cfc9f;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.75rem, 2.8vmin, 1rem);
+  font-weight: 600;
+  margin: 0;
+  width: 100%;
+  animation: fadeIn 0.3s ease-out both;
+
+  ion-icon {
+    font-size: 1.1em;
+    flex-shrink: 0;
+  }
+}
+
 // ── Botão Principal ────────────────────────────────────────────────────────
 .btn-liberar {
   --background: linear-gradient(135deg, #6c63ff 0%, #3b82f6 100%);
@@ -157,6 +188,26 @@ ion-content {
   height: clamp(3.5rem, 11vmin, 5rem);
   flex-shrink: 0;
   animation: fadeInUp 0.7s ease-out 0.4s both;
+}
+
+// ── Botão Principal - Desabilitado ────────────────────────────────────────────────────────
+.btn-liberar-disabled {
+  --background: linear-gradient(135deg, #3a3a4a 0%, #2c2c3e 100%);
+  --background-hover: linear-gradient(135deg, #444458 0%, #36364e 100%);
+  --background-activated: linear-gradient(135deg, #303042 0%, #262636 100%);
+  --color: rgba(255, 255, 255, 0.45);
+  --border-radius: 1.25rem;
+  --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(0.8rem, 3.2vmin, 1.6rem);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  width: 100%;
+  height: clamp(3.5rem, 11vmin, 5rem);
+  flex-shrink: 0;
+  animation: fadeInUp 0.7s ease-out 0.4s both;
+  opacity: 0.7;
 }
 
 // ── Popover de Menu ────────────────────────────────────────────────────────
