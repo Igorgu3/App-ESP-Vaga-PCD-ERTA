@@ -58,11 +58,11 @@ export class HomePage {
         this.map.setView([latitude, longitude], 15);
 
         const iconUsuario = L.divIcon({
-          html: '🚗',
+          html: '<span style="font-size:2rem;line-height:1;display:block;">🚗</span>',
           className: '',
-          iconSize: [32, 32],
-          iconAnchor: [16, 16],
-          popupAnchor: [0, -16],
+          iconSize: [50, 50],
+          iconAnchor: [25, 25],
+          popupAnchor: [0, -25],
         });
 
         L.marker([latitude, longitude], { icon: iconUsuario })
