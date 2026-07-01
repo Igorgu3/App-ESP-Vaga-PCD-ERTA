@@ -1,10 +1,15 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonModal, IonPopover, IonList, IonItem } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonModal, IonPopover, IonList, IonItem, AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { personCircleOutline, personAddOutline, menuOutline, radioOutline, lockOpenOutline, checkmarkCircleOutline, addCircleOutline } from 'ionicons/icons';
 import * as L from 'leaflet';
 import { Geolocation } from '@capacitor/geolocation';
+import { BleClient } from '@capacitor-community/bluetooth-le';
+
+// UUIDs do serviço BLE do ESP32 — devem coincidir com o firmware
+const SERVICE_UUID = '12345678-1234-1234-1234-123456789abc';
+const CHAR_UUID    = 'abcdef01-1234-1234-1234-123456789abc';
 
 // Fix: corrige os paths dos ícones quebrados pelo bundler do Angular
 const iconDefault = L.icon({
@@ -37,7 +42,7 @@ export class HomePage {
 
   private map!: L.Map;
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private alertCtrl: AlertController) {
     addIcons({ personCircleOutline, personAddOutline, addCircleOutline, menuOutline, radioOutline, lockOpenOutline, checkmarkCircleOutline });
   }
 
@@ -108,18 +113,33 @@ export class HomePage {
     this.cdr.detectChanges(); // força Angular a atualizar o [disabled] do botão
   }
 
-  // TODO (colegas): implementar conexão BLE com o ESP32
-  // 1. BleClient.requestDevice({ namePrefix: 'VAGA-TA' })
-  // 2. BleClient.connect(deviceId)
-  // 3. BleClient.write(deviceId, SERVICE_UUID, CHAR_UUID, DataView com 0x01)
-  // 4. BleClient.disconnect(deviceId)
   private async conectarESP(): Promise<void> {
-    console.log('Conectar ESP32 para vaga:', this.vagaSelecionada);
+    const device = await BleClient.requestDevice({ namePrefix: 'VAGA-TA' });
+
+    await BleClient.connect(device.deviceId);
+
+    try {
+      const data = new DataView(new ArrayBuffer(1));
+      data.setUint8(0, 0x01);
+      await BleClient.write(device.deviceId, SERVICE_UUID, CHAR_UUID, data);
+    } finally {
+      await BleClient.disconnect(device.deviceId);
+    }
   }
 
-  public onLiberarVaga() {
-    this.conectarESP();
-    this.setOpen(true);
+  public async onLiberarVaga() {
+    try {
+      await this.conectarESP();
+      this.setOpen(true);
+    } catch (error) {
+      console.error('Erro BLE:', error);
+      const alert = await this.alertCtrl.create({
+        header: 'Falha na conexão',
+        message: 'Não foi possível comunicar com a vaga. Verifique se o Bluetooth está ativo e tente novamente.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
   }
 
   onItemClicked(item: { name: string; icon: string }) {
