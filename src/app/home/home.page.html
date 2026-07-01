@@ -30,7 +30,7 @@
     }
 
     <ion-button [ngClass]="vagaSelecionada ? 'btn-liberar' : 'btn-liberar-disabled'"
-                expand="block" (click)="onLiberarVaga()" [disabled]="!vagaSelecionada">
+                expand="block" (click)="setOpen(true)" [disabled]="!vagaSelecionada">
       <ion-icon name="radio-outline" slot="start"></ion-icon>
       EMITIR SINAL — LIBERAR VAGA
       <ion-icon name="lock-open-outline" slot="end"></ion-icon>
@@ -59,7 +59,7 @@
         </ion-header>
         <ion-content class="ion-padding modal-body">
           <p class="modal-desc">Ao confirmar, o sinal será emitido para liberar a vaga <strong>{{ vagaSelecionada }}</strong>.</p>
-          <ion-button expand="block" class="btn-sim" (click)="setOpen(false)">
+          <ion-button expand="block" class="btn-sim" (click)="onLiberarVaga();">
             <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
             Sim, liberar!
           </ion-button>

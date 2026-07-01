@@ -130,7 +130,6 @@ export class HomePage {
   public async onLiberarVaga() {
     try {
       await this.conectarESP();
-      this.setOpen(true);
     } catch (error) {
       console.error('Erro BLE:', error);
       const alert = await this.alertCtrl.create({
@@ -140,6 +139,8 @@ export class HomePage {
       });
       await alert.present();
     }
+
+    this.setOpen(false);
   }
 
   onItemClicked(item: { name: string; icon: string }) {
