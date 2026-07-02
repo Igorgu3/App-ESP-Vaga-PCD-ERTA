@@ -14,14 +14,19 @@ volatile bool liberarVagaFlag = false;
 #define ECHO_PIN     21
 #define LED_VERMELHO 19
 #define LED_VERDE    23
+#define LED_AMARELO  13
+#define BUZZER       4
+#define TRIGGER_CAM  18
 
 // ================= CONSTANTES =================
 const float LIMITE_CM = 50.0;
 const float MIN_CM    = 2.0;
 
 const unsigned long INTERVALO_SENSOR_ms   = 5000;
-const unsigned long TEMPO_AUTENTICACAO_ms = 60000;
-const unsigned long TEMPO_BUZZER_NEGATIVO = 60UL * 1000UL;
+const unsigned long TEMPO_AUTENTICACAO_ms = 10000;
+//const unsigned long TEMPO_BUZZER_NEGATIVO = 60UL * 1000UL; //1 min
+//const unsigned long TEMPO_BUZZER_NEGATIVO = 30UL * 1000UL; // 30s
+const unsigned long TEMPO_BUZZER_ON = 10UL * 1000UL; // 10s
 
 unsigned long ultimoTempoSensor = 0;
 
@@ -113,6 +118,19 @@ void atualizarSensorPorMillis() {
     }
 }
 
+void ligaBuzzer(){
+    unsigned long inicio = millis();
+
+    while (millis() - inicio < TEMPO_BUZZER_ON) { 
+        digitalWrite(BUZZER, HIGH);
+        delay(5); // metade do período (5 ms)
+
+        digitalWrite(BUZZER, LOW);
+        delay(5); // metade do período (5 ms)
+    }
+    digitalWrite(BUZZER, LOW); // garante que termina desligado
+}
+
 // ================= SETUP =================
 void setup() {
     Serial.begin(115200);
@@ -120,11 +138,17 @@ void setup() {
     pinMode(TRIG_PIN,     OUTPUT);
     pinMode(ECHO_PIN,     INPUT);
     pinMode(LED_VERMELHO, OUTPUT);
+    pinMode(LED_AMARELO, OUTPUT);
     pinMode(LED_VERDE,    OUTPUT);
+    pinMode(BUZZER,    OUTPUT);
+    pinMode(TRIGGER_CAM,    OUTPUT);
 
     digitalWrite(TRIG_PIN,     LOW);
     digitalWrite(LED_VERMELHO, LOW);
+    digitalWrite(LED_AMARELO,    LOW);
     digitalWrite(LED_VERDE,    LOW);
+    digitalWrite(BUZZER,    LOW);
+    digitalWrite(TRIGGER_CAM,    LOW);
 
     iniciarBLE();
     mudarEstado(RESET_STATE);
@@ -143,6 +167,9 @@ void loop() {
         case RESET_STATE:
             digitalWrite(LED_VERMELHO, LOW);
             digitalWrite(LED_VERDE,    LOW);
+            digitalWrite(LED_AMARELO,    LOW);
+            digitalWrite(BUZZER,    LOW);
+            digitalWrite(TRIGGER_CAM,    LOW);
             if (p == false) {
                 mudarEstado(S1_AGUARDA_CARRO);
             }
@@ -151,6 +178,9 @@ void loop() {
         case S1_AGUARDA_CARRO:
             digitalWrite(LED_VERMELHO, LOW);
             digitalWrite(LED_VERDE,    LOW);
+            digitalWrite(LED_AMARELO,    LOW);
+            digitalWrite(BUZZER,    LOW);
+            digitalWrite(TRIGGER_CAM,    LOW);
             if (p == false) {
                 delay(1);
                 break;
@@ -160,7 +190,8 @@ void loop() {
             break;
 
         case S4_VERIFICA_PLACA:
-            digitalWrite(LED_VERMELHO, HIGH);
+            digitalWrite(LED_VERMELHO, LOW);
+            digitalWrite(LED_AMARELO,    HIGH);
             digitalWrite(LED_VERDE,    LOW);
             Serial.println("Aguardando autenticacao BLE...");
 
@@ -181,12 +212,16 @@ void loop() {
             break;
 
         case S5_VERIFICA_CAMERA:
-            // Câmera removida — objeto não identificado vira evento negativo
+            // 
+            digitalWrite(TRIGGER_CAM, HIGH);
+            delay(50);
+            digitalWrite(TRIGGER_CAM, LOW);
             mudarEstado(S2_EVENTO_NEGATIVO);
             break;
 
         case S3_EVENTO_POSITIVO:
             digitalWrite(LED_VERMELHO, LOW);
+            digitalWrite(LED_AMARELO,    LOW);
             digitalWrite(LED_VERDE,    HIGH);
             Serial.println("Vaga liberada via app!");
             delay(1);
@@ -197,11 +232,16 @@ void loop() {
 
         case S2_EVENTO_NEGATIVO:
             digitalWrite(LED_VERMELHO, HIGH);
+            digitalWrite(LED_AMARELO,    LOW);
             digitalWrite(LED_VERDE,    LOW);
             Serial.println("Notificacao: objeto bloqueando a vaga");
-            if (agora - tempoInicioEstado >= TEMPO_BUZZER_NEGATIVO) {
-                delay(1);
+            ligaBuzzer();
+            /*
+            if (agora - tempoInicioEstado <= TEMPO_BUZZER_NEGATIVO) {
+                ligaBuzzer();
+                mudarEstado(S2_EVENTO_NEGATIVO);
             }
+            */
             if (p == false) {
                 mudarEstado(S1_AGUARDA_CARRO);
             }
